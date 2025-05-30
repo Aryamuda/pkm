@@ -130,7 +130,7 @@ def train_and_evaluate_model(_df_input):
         st.warning("Peringatan: Stratifikasi tidak dapat dilakukan karena hanya ada satu kelas dalam y_encoded.")
 
     X_train, X_test, y_train_encoded, y_test_encoded = train_test_split(
-        X, y_encoded, test_size=0.25, random_state=42, stratify=stratify_param
+        X, y_encoded, test_size=0.2, random_state=42, stratify=stratify_param
     )
 
     pipeline_xgb_fixed_params.fit(X_train, y_train_encoded)
@@ -247,7 +247,7 @@ def train_and_evaluate_model(_df_input):
 
 
 # --- UI Streamlit ---
-st.title("🔬 Analisis & Prediksi Resistensi Antibiotik (Simulasi)")
+st.title("Analisis & Prediksi Resistensi Antibiotik (Simulasi)")
 st.markdown("""
 Selamat datang di aplikasi simulasi untuk analisis resistensi antibiotik menggunakan model XGBoost.
 Aplikasi ini memungkinkan Anda untuk:
@@ -259,14 +259,14 @@ Aplikasi ini memungkinkan Anda untuk:
 Ini adalah alat untuk demonstrasi konsep dan eksplorasi.
 """)
 
-st.sidebar.header("⚙️ Pengaturan Dataset Sintetis")
+st.sidebar.header("Pengaturan Dataset Sintetis")
 jumlah_pasien_input = st.sidebar.number_input("Jumlah Pasien", min_value=100, max_value=10000, value=1000, step=100,
                                               help="Atur jumlah data pasien yang akan digenerasi untuk simulasi.")
 
 # Generate data
 df = generate_data(jumlah_pasien_input)
 
-st.subheader("📊 Pratinjau Dataset Sintetis")
+st.subheader("Pratinjau Dataset Sintetis")
 st.markdown(f"Dataset yang dihasilkan memiliki **{df.shape[0]}** baris dan **{df.shape[1]}** kolom.")
 
 col1_info, col2_info = st.columns([0.7, 0.3])  # Atur lebar kolom
@@ -279,7 +279,7 @@ with col2_info:
     distribusi_target.columns = ['Kelas Target', 'Jumlah']
     st.dataframe(distribusi_target)
 
-if st.sidebar.button("🚀 Latih Model & Tampilkan Hasil Analisis", type="primary", use_container_width=True):
+if st.sidebar.button("Latih Model & Tampilkan Hasil Analisis", type="primary", use_container_width=True):
     if df['R/TR'].nunique() < 2:
         st.error("Kesalahan: Data yang dihasilkan hanya memiliki satu kelas pada kolom target 'R/TR'. "
                  "Model klasifikasi tidak dapat dilatih. Coba variasikan jumlah pasien atau periksa kembali logika generasi data.")
@@ -287,10 +287,10 @@ if st.sidebar.button("🚀 Latih Model & Tampilkan Hasil Analisis", type="primar
         with st.spinner(f"Sedang memproses {jumlah_pasien_input} data dan melatih model XGBoost... Mohon tunggu. ⏳"):
             fig_fi, fi_df, metrics, report_dict, fig_cm, le_classes = train_and_evaluate_model(df.copy())
 
-        st.success("Analisis selesai! 🎉 Berikut adalah hasilnya:")
+        st.success("Analisis selesai! Berikut adalah hasilnya:")
 
         tab_metrics, tab_fi, tab_report = st.tabs(
-            ["📈 Metrik & Confusion Matrix", "🔑 Pentingnya Fitur", "📋 Laporan Klasifikasi Rinci"])
+            ["Metrik & Confusion Matrix", "Pentingnya Fitur", "Laporan Klasifikasi Rinci"])
 
         with tab_metrics:
             st.header("Evaluasi Performa Model")
@@ -344,7 +344,7 @@ if st.sidebar.button("🚀 Latih Model & Tampilkan Hasil Analisis", type="primar
             f"Model dilatih dan dievaluasi pada dataset yang baru digenerasi dengan {jumlah_pasien_input} pasien. Kelas yang terdeteksi: {le_classes}")
 
 else:
-    st.info("👈 Atur jumlah pasien di sidebar dan klik tombol 'Latih Model & Tampilkan Hasil Analisis' untuk memulai.")
+    st.info("Atur jumlah pasien di sidebar dan klik tombol 'Latih Model & Tampilkan Hasil Analisis' untuk memulai.")
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("Aplikasi Streamlit untuk PKM-GFT")
