@@ -284,7 +284,7 @@ if st.sidebar.button("Latih Model & Tampilkan Hasil Analisis", type="primary", u
         st.error("Kesalahan: Data yang dihasilkan hanya memiliki satu kelas pada kolom target 'R/TR'. "
                  "Model klasifikasi tidak dapat dilatih. Coba variasikan jumlah pasien atau periksa kembali logika generasi data.")
     else:
-        with st.spinner(f"Sedang memproses {jumlah_pasien_input} data dan melatih model XGBoost... Mohon tunggu. ⏳"):
+        with st.spinner(f"Sedang memproses {jumlah_pasien_input} data dan melatih model XGBoost... Mohon tunggu."):
             fig_fi, fi_df, metrics, report_dict, fig_cm, le_classes = train_and_evaluate_model(df.copy())
 
         st.success("Analisis selesai! Berikut adalah hasilnya:")
@@ -341,7 +341,7 @@ if st.sidebar.button("Latih Model & Tampilkan Hasil Analisis", type="primary", u
 
         st.markdown("---")
         st.caption(
-            f"Model dilatih dan dievaluasi pada dataset yang baru digenerasi dengan {jumlah_pasien_input} pasien. Kelas yang terdeteksi: {le_classes}")
+            f"Model dilatih dan dievaluasi pada dataset yang baru digenerasi dengan {jumlah_pasien_input} pasien")
 
 else:
     st.info("Atur jumlah pasien di sidebar dan klik tombol 'Latih Model & Tampilkan Hasil Analisis' untuk memulai.")
